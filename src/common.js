@@ -1,11 +1,11 @@
-import {OrderedMap, Map} from 'immutable'
+import {OrderedMap, Record} from 'immutable'
 
-export function arrToMap(arr, DataRecord = Map) {
+export function arrToMap(arr, DataRecord = Record) {
   return arr.reduce((acc, item) =>
-      acc.set(item.id, new DataRecord(item))
+      acc.set(item, new DataRecord({address: item}))
     , new OrderedMap({}))
 }
 
 export function mapToArr(map) {
-  return map.valueSeq().toArray()
+  return map.toIndexedSeq().toArray()
 }

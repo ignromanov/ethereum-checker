@@ -21,7 +21,7 @@ class AddressesList extends Component {
     
     return (
       <ListGroup>
-        {addresses.map(record => <ListGroupItem>{record.address}</ListGroupItem>)}
+        {addresses.map(record => <ListGroupItem key={record.address}>{record.address}</ListGroupItem>)}
       </ListGroup>
     );
   }
