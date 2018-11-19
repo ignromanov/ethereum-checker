@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Container, Navbar, NavbarBrand, Row} from 'reactstrap'
 import AddAddress from './AddAddress'
+import AddressesList from './AddressesList'
 
 const Layouts = (props) => (
   <>
@@ -11,7 +12,7 @@ const Layouts = (props) => (
       <Row>
         <Col className='main'>
           <AddAddress/>
-        
+          <AddressesList/>
         </Col>
       </Row>
     </Container>

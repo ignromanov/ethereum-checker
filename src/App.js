@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import {Layouts} from './components/Layouts'
+import Layouts from './components/Layouts'
+import {Provider} from 'react-redux'
+import configureStore from './store'
+
+const store = configureStore();
 
 class App extends Component {
   render() {
-    return <Layouts/>
+    return (
+      <Provider store={store}>
+        <Layouts/>
+      </Provider>
+    )
   }
 }
 
