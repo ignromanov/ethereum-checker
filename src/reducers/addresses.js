@@ -1,6 +1,6 @@
 import {OrderedMap, Record} from 'immutable'
-import {ADD_OBSERVATION_ADDRESS} from "../actionTypes";
-import {arrToMap, mapToArr} from "../common";
+import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS} from "../actionTypes";
+import {arrToMap, mapToArrOfAddresses} from "../common";
 import {isAddress} from "../ethereum/isAddress";
 
 const AddressRecord = Record({
@@ -21,11 +21,17 @@ const defaultReducerState = (() => {
 
 export default (addressesState = defaultReducerState, action) => {
   const {type, payload, response} = action
+  let newState
   
   switch (type) {
     case ADD_OBSERVATION_ADDRESS:
-      const newState = addressesState.setIn(['entities', payload.address], new AddressRecord({address: payload.address}))
-      localStorage.setItem('addresses', mapToArr(newState.entities).map(v => v.address).join(','));
+      newState = addressesState.setIn(['entities', payload.address], new AddressRecord({address: payload.address}))
+      localStorage.setItem('addresses', mapToArrOfAddresses(newState.entities).join(','));
+      return newState
+    
+    case DELETE_OBSERVATION_ADDRESS:
+      newState = addressesState.deleteIn(['entities', payload.address])
+      localStorage.setItem('addresses', mapToArrOfAddresses(newState.entities).join(','));
       return newState
     
     default:

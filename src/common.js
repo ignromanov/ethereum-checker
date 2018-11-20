@@ -9,3 +9,7 @@ export function arrToMap(arr, DataRecord = Record) {
 export function mapToArr(map) {
   return map.toIndexedSeq().toArray()
 }
+
+export function mapToArrOfAddresses(map) {
+  return mapToArr(map).map(v => v.address)
+}
