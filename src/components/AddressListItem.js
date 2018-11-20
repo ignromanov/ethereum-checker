@@ -5,12 +5,12 @@ import {connect} from 'react-redux'
 import {deleteObservationAddress} from './../actions'
 
 class AddressListItem extends PureComponent {
-  static defaultProps = {
-  };
+  static defaultProps = {};
   
   static propTypes = {
     address: PropTypes.string.isRequired
   };
+  handleDeleteObserve = () => this.props.deleteObservationAddress(this.props.address)
   
   render() {
     const {address} = this.props
@@ -21,11 +21,6 @@ class AddressListItem extends PureComponent {
       </>
     );
   }
-  
-  handleDeleteObserve = (ev) => {
-    const {address} = this.props
-    this.props.deleteObservationAddress(address)
-  }
 }
 
-export default connect(null, { deleteObservationAddress })(AddressListItem);
+export default connect(null, {deleteObservationAddress})(AddressListItem);
