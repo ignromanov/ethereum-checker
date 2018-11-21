@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {deleteObservationAddress} from './../actions'
+import {NavLink} from 'react-router-dom'
 
 class AddressListItem extends PureComponent {
   static defaultProps = {};
@@ -16,7 +17,7 @@ class AddressListItem extends PureComponent {
     const {address} = this.props
     return (
       <>
-        {address}
+        <NavLink to={`/detailed/${address}`}>{address}</NavLink>
         <Button close onClick={this.handleDeleteObserve}/>
       </>
     );
