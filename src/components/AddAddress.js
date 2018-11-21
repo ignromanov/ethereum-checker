@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap'
 import card from './../decorators/card'
-import {isAddress} from "../ethereum/isAddress";
+import Web3 from 'web3'
 import {addObservationAddress} from './../actions'
 import {connect} from 'react-redux'
 
@@ -22,7 +22,7 @@ class AddAddress extends Component {
   
   render() {
     const {address} = this.state
-    const isEthereumAddress = isAddress(address)
+    const isEthereumAddress = Web3.utils.isAddress(address)
     return (
       <Form inline>
         <FormGroup className="mb-5 mr-sm-5 mb-sm-0">

@@ -1,4 +1,4 @@
-import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS} from "../actionTypes";
+import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS, LOAD_ADDRESSES_BALANCES} from "../actionTypes";
 
 export function addObservationAddress(address) {
   return {
@@ -13,4 +13,12 @@ export function deleteObservationAddress(address) {
     payload: { address }
   }
   
+}
+
+export function loadAddressesBalances(addresses) {
+  return {
+    type: LOAD_ADDRESSES_BALANCES,
+    callAPI: `?module=account&action=balancemulti&address=${addresses}&tag=latest`,
+    payload: { addresses }
+  }
 }

@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import {ListGroup, ListGroupItem} from 'reactstrap'
-import {mapToArr} from './../common'
+import {mapToArr, collectionToStrOfAddresses} from './../common'
 import card from './../decorators/card'
-import AddressListItem from "./AddressListItem";
+import AddressListItem from "./AddressListItem"
+import {loadAddressesBalances} from './../actions'
 
 class AddressesList extends Component {
   static defaultProps = {};
@@ -13,7 +14,13 @@ class AddressesList extends Component {
     addresses: PropTypes.array.isRequired
   };
   
-  state = {};
+  state = {
+    // addresses: []
+  };
+  
+  componentDidMount() {
+    this.props.loadAddressesBalances(collectionToStrOfAddresses(this.props.addresses))
+  }
   
   render() {
     const {addresses} = this.props
@@ -23,7 +30,7 @@ class AddressesList extends Component {
       <ListGroup>
         {addresses.map(record =>
           <ListGroupItem key={record.address}>
-            <AddressListItem address={record.address} />
+            <AddressListItem addressRecord={record} />
           </ListGroupItem>
         )}
       </ListGroup>
@@ -35,4 +42,8 @@ const mapStateToProps = (state) => ({
   addresses: mapToArr(state.addresses.entities) // todo: make selector
 })
 
-export default connect(mapStateToProps)(card('Addresses', AddressesList));
+const mapDispatchToProps = {
+  loadAddressesBalances
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(card('Addresses', AddressesList));
