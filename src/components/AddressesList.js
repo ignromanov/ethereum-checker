@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import {ListGroup, ListGroupItem} from 'reactstrap'
-import {mapToArr, collectionToStrOfAddresses} from './../common'
+import {mapToArr, mapToStrOfAddresses} from './../common'
 import card from './../decorators/card'
 import AddressListItem from "./AddressListItem"
-import {loadAddressesBalances} from './../actions'
+import {loadBalances} from './../actions'
 
 class AddressesList extends Component {
   static defaultProps = {};
   
   static propTypes = {
-    addresses: PropTypes.array.isRequired
+    addresses: PropTypes.array.isRequired,
+    loadBalances: PropTypes.func.isRequired
   };
   
   state = {
@@ -19,7 +20,13 @@ class AddressesList extends Component {
   };
   
   componentDidMount() {
-    this.props.loadAddressesBalances(collectionToStrOfAddresses(this.props.addresses))
+    const {loadBalances, addresses} = this.props
+    loadBalances(mapToStrOfAddresses(addresses))
+    this.intervalId = setInterval(() => loadBalances(mapToStrOfAddresses(addresses)), 5000)
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
   
   render() {
@@ -30,7 +37,7 @@ class AddressesList extends Component {
       <ListGroup>
         {addresses.map(record =>
           <ListGroupItem key={record.address}>
-            <AddressListItem addressRecord={record} />
+            <AddressListItem addressRecord={record}/>
           </ListGroupItem>
         )}
       </ListGroup>
@@ -43,7 +50,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  loadAddressesBalances
+  loadBalances
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(card('Addresses', AddressesList));

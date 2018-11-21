@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Col, Container, Navbar, NavbarBrand, Row} from 'reactstrap'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {Col, Container, Navbar, Row} from 'reactstrap'
+import {BrowserRouter as Router, NavLink, Route, Redirect, Switch} from 'react-router-dom'
 import {Main} from './../routes/Main'
 import {Detailed} from './../routes/Detailed'
 
@@ -9,8 +9,6 @@ class Layouts extends Component {
   
   static propTypes = {};
   
-  state = {};
-  
   getDetailedComponent = ({match}) => <Detailed address={match.params.address}/>
   
   render() {
@@ -18,7 +16,7 @@ class Layouts extends Component {
       <Router>
         <>
           <Navbar color="light" light expand="md" fixed='top' role='navigation'>
-            <NavbarBrand href="/">Ethereum checker</NavbarBrand>
+            <NavLink to='/' className='navbar-brand'>Ethereum checker</NavLink>
           </Navbar>
           <Container fluid>
             <Row>
@@ -26,6 +24,7 @@ class Layouts extends Component {
                 <Switch>
                   <Route exact path='/' component={Main}/>
                   <Route exact path='/detailed/:address' render={this.getDetailedComponent}/>
+                  <Redirect path="*" to="/"/>
                 </Switch>
               </Col>
             </Row>

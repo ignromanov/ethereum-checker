@@ -1,9 +1,9 @@
-import {createStore, compose, applyMiddleware} from 'redux'
+import {applyMiddleware, compose, createStore} from 'redux'
 import rootReducer from "./../reducers";
 import logger from './../middlewares/logger'
 import etherscanApi from './../middlewares/etherscanApi'
 import thunk from 'redux-thunk'
-import { routerMiddleware } from 'connected-react-router'
+import {routerMiddleware} from 'connected-react-router'
 
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

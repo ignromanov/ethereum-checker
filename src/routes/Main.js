@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import AddAddress from './../components/AddAddress'
 import AddressesList from './../components/AddressesList'
 

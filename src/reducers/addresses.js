@@ -1,17 +1,11 @@
 import {OrderedMap, Record} from 'immutable'
-import {
-  ADD_OBSERVATION_ADDRESS,
-  DELETE_OBSERVATION_ADDRESS,
-  LOAD_ADDRESSES_BALANCES,
-  START,
-  SUCCESS
-} from "../actionTypes";
-import {arrToMap, collectionToStrOfAddresses} from "../common";
+import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS, LOAD_BALANCES, START, SUCCESS} from "../actionTypes";
+import {arrToMap, mapToStrOfAddresses} from "../common";
 import Web3 from 'web3'
 
 const AddressRecord = Record({
   address: undefined,
-  balance: 0
+  balance: ''
 })
 
 const ReducerState = Record({
@@ -36,19 +30,19 @@ export default (addressesState = defaultReducerState, action) => {
   switch (type) {
     case ADD_OBSERVATION_ADDRESS:
       newState = addressesState.setIn(['entities', payload.address], new AddressRecord({address: payload.address}))
-      saveToLocalStorage('addresses', collectionToStrOfAddresses(newState.entities));
+      saveToLocalStorage('addresses', mapToStrOfAddresses(newState.entities));
       return newState
     
     case DELETE_OBSERVATION_ADDRESS:
       newState = addressesState.deleteIn(['entities', payload.address])
-      saveToLocalStorage('addresses', collectionToStrOfAddresses(newState.entities));
+      saveToLocalStorage('addresses', mapToStrOfAddresses(newState.entities));
       return newState
     
     
-    case LOAD_ADDRESSES_BALANCES + START:
+    case LOAD_BALANCES + START:
       return addressesState.set('loading', true)
     
-    case LOAD_ADDRESSES_BALANCES + SUCCESS:
+    case LOAD_BALANCES + SUCCESS:
       return addressesState
         .set('entities', getUpdatedMapByResponse(addressesState.entities, response.result))
         .set('loading', false)
@@ -60,7 +54,7 @@ export default (addressesState = defaultReducerState, action) => {
 }
 
 const getUpdatedMapByResponse = (entities, resultArr) => {
-  console.log(resultArr)
+  // todo: should made easier
   const resultAddr = resultArr.reduce((acc, obj) =>
     entities.has(obj.account)
       ? acc.set(obj.account, new AddressRecord({address: obj.account, balance: obj.balance}))
