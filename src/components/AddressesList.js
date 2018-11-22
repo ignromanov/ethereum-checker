@@ -30,7 +30,7 @@ class AddressesList extends Component {
   
   render() {
     const {addresses} = this.props
-    if (!addresses.length) return <strong>No addresses chosen</strong>
+    if (!addresses.length) return <strong>No addresses to display</strong>
     
     return (
       <ListGroup>
@@ -52,4 +52,4 @@ const mapDispatchToProps = {
   loadBalances
 }
 
-export default card('Addresses', connect(mapStateToProps, mapDispatchToProps)(AddressesList));
+export default card('Addresses to check', connect(mapStateToProps, mapDispatchToProps)(AddressesList));

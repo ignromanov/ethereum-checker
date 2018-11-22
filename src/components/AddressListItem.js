@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
-import {deleteObservationAddress} from './../actions'
+import {deleteAddress} from './../actions'
 import {NavLink} from 'react-router-dom'
 import {fromWeiToEther} from './../ethereum'
 
@@ -14,8 +14,8 @@ class AddressListItem extends PureComponent {
     })
   };
   handleDeleteObserve = () => {
-    const {deleteObservationAddress, addressRecord} = this.props
-    deleteObservationAddress(addressRecord.address)
+    const {deleteAddress, addressRecord} = this.props
+    deleteAddress(addressRecord.address)
   }
   getAddressView = (address) => <NavLink to={`/detailed/${address}`}>{address}</NavLink>
   getBalanceView = (balance) => balance ? fromWeiToEther(balance) : 'loading...'
@@ -53,4 +53,4 @@ class AddressListItem extends PureComponent {
   }
 }
 
-export default connect(null, {deleteObservationAddress})(AddressListItem);
+export default connect(null, {deleteAddress})(AddressListItem);

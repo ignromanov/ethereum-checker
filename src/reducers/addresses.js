@@ -1,5 +1,5 @@
 import {OrderedMap, Record} from 'immutable'
-import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS, LOAD_BALANCES, START, SUCCESS} from "../actionTypes";
+import {ADD_ADDRESS, DELETE_ADDRESS, LOAD_BALANCES, START, SUCCESS} from "../actionTypes";
 import {arrToMap, mapToStrOfAddresses} from "../common";
 import Web3 from 'web3'
 
@@ -28,12 +28,12 @@ export default (addressesState = defaultReducerState, action) => {
   let newState
   
   switch (type) {
-    case ADD_OBSERVATION_ADDRESS:
+    case ADD_ADDRESS:
       newState = addressesState.setIn(['entities', payload.address], new AddressRecord({address: payload.address}))
       saveToLocalStorage('addresses', mapToStrOfAddresses(newState.entities));
       return newState
     
-    case DELETE_OBSERVATION_ADDRESS:
+    case DELETE_ADDRESS:
       newState = addressesState.deleteIn(['entities', payload.address])
       saveToLocalStorage('addresses', mapToStrOfAddresses(newState.entities));
       return newState

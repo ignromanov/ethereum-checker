@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap'
 import card from './../decorators/card'
 import {isAddress} from './../ethereum'
-import {addObservationAddress} from './../actions'
+import {addAddress} from './../actions'
 import {connect} from 'react-redux'
 
 class AddAddress extends PureComponent {
@@ -11,10 +11,10 @@ class AddAddress extends PureComponent {
   };
   addressChangeHandler = ev => this.setState({address: ev.target.value})
   addAddressHandler = () => {
-    const {address} = this.state, {addObservationAddress} = this.props
+    const {address} = this.state, {addAddress} = this.props
 
     if(!isAddress(address)) return
-    addObservationAddress(address)
+    addAddress(address)
     this.setState({address: ''})
   }
   
@@ -34,8 +34,8 @@ class AddAddress extends PureComponent {
 }
 
 const mapDispatchToProps = {
-  addObservationAddress
+  addAddress: addAddress
 }
 
-export default card('Add new address to observation', connect(null, mapDispatchToProps)(AddAddress));
+export default card('Add address for checking', connect(null, mapDispatchToProps)(AddAddress));
 

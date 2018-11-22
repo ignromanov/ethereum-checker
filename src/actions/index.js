@@ -1,9 +1,9 @@
-import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS, LOAD_BALANCES, LOAD_TRANSACTIONS} from "../actionTypes";
+import {ADD_ADDRESS, DELETE_ADDRESS, LOAD_BALANCES, LOAD_TRANSACTIONS} from "../actionTypes";
 
-export function addObservationAddress(address) {
+export function addAddress(address) {
   return (dispatch) => {
     dispatch({
-      type: ADD_OBSERVATION_ADDRESS,
+      type: ADD_ADDRESS,
       payload: { address }
     })
   
@@ -11,9 +11,9 @@ export function addObservationAddress(address) {
   }
 }
 
-export function deleteObservationAddress(address) {
+export function deleteAddress(address) {
   return {
-    type: DELETE_OBSERVATION_ADDRESS,
+    type: DELETE_ADDRESS,
     payload: { address }
   }
   
