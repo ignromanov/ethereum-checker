@@ -1,0 +1,2 @@
+export const ETHERSCAN_API_KEY = 'KDE41DK1EY6FIX5NX6H9MWPHNICB1P4KQS'
+export const ETHERSCAN_API_REFERENCE = 'https://api.etherscan.io/api'
