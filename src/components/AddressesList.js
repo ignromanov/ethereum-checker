@@ -19,9 +19,10 @@ class AddressesList extends Component {
   
   componentDidMount() {
     const {loadBalances, addresses} = this.props
-    loadBalances(mapToStrOfAddresses(addresses))
+    if (addresses.length) loadBalances(mapToStrOfAddresses(addresses))
     
-    this.intervalId = setInterval(() => loadBalances(mapToStrOfAddresses(addresses)), 15000)
+    this.intervalId = setInterval(() =>
+      this.props.addresses.length && loadBalances(mapToStrOfAddresses(this.props.addresses)), 15000)
   }
   
   componentWillUnmount() {
