@@ -4,7 +4,7 @@ import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {deleteObservationAddress} from './../actions'
 import {NavLink} from 'react-router-dom'
-import Web3 from 'web3'
+import {fromWeiToEther} from './../ethereum'
 
 class AddressListItem extends PureComponent {
   static propTypes = {
@@ -13,15 +13,12 @@ class AddressListItem extends PureComponent {
       balance: PropTypes.string.isRequired,
     })
   };
-  handleDeleteObserve = () => this.props.deleteObservationAddress(this.props.address)
-  getAddressView = (address) =>
-    <div className='d-inline p-2 mb-2'>
-      <NavLink to={`/detailed/${address}`}>{address}</NavLink>
-    </div>
-  getBalanceView = (balance) => balance ?
-    <div className='d-inline bg-light p-2 mb-2'>
-      {parseFloat(Web3.utils.fromWei(balance.toString(), 'ether')).toFixed(6) + ' Ξ'}
-    </div> : null
+  handleDeleteObserve = () => {
+    const {deleteObservationAddress, addressRecord} = this.props
+    deleteObservationAddress(addressRecord.address)
+  }
+  getAddressView = (address) => <NavLink to={`/detailed/${address}`}>{address}</NavLink>
+  getBalanceView = (balance) => balance ? fromWeiToEther(balance) : 'loading...'
   
   constructor(props) {
     super(props)
@@ -37,16 +34,19 @@ class AddressListItem extends PureComponent {
         balance: newProps.balance
       }
     }
-    
     return null
   }
   
   render() {
     const {address, balance} = this.props.addressRecord
     return (
-      <div>
-        {this.getAddressView(address)}
-        {this.getBalanceView(balance)}
+      <div className='container-fluid'>
+        <div className='d-inline p-2 mb-2'>
+          {this.getAddressView(address)}
+        </div>
+        <div className='d-inline bg-light p-2 mb-2'>
+          {this.getBalanceView(balance)}
+        </div>
         <Button close onClick={this.handleDeleteObserve}/>
       </div>
     );

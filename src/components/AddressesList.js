@@ -8,21 +8,20 @@ import AddressListItem from "./AddressListItem"
 import {loadBalances} from './../actions'
 
 class AddressesList extends Component {
-  static defaultProps = {};
+  static defaultProps = {
+    addresses: []
+  };
   
   static propTypes = {
     addresses: PropTypes.array.isRequired,
     loadBalances: PropTypes.func.isRequired
   };
   
-  state = {
-    // addresses: []
-  };
-  
   componentDidMount() {
     const {loadBalances, addresses} = this.props
     loadBalances(mapToStrOfAddresses(addresses))
-    this.intervalId = setInterval(() => loadBalances(mapToStrOfAddresses(addresses)), 5000)
+    
+    this.intervalId = setInterval(() => loadBalances(mapToStrOfAddresses(addresses)), 15000)
   }
   
   componentWillUnmount() {
@@ -53,4 +52,4 @@ const mapDispatchToProps = {
   loadBalances
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(card('Addresses', AddressesList));
+export default card('Addresses', connect(mapStateToProps, mapDispatchToProps)(AddressesList));

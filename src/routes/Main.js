@@ -2,8 +2,8 @@ import React from 'react'
 import AddAddress from './../components/AddAddress'
 import AddressesList from './../components/AddressesList'
 
-export const Main = () =>
+export const Main = (props) =>
   <>
-    <AddAddress/>
-    <AddressesList/>
+    <AddAddress {...props}/>
+    <AddressesList {...props}/>
   </>

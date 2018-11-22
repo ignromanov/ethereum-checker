@@ -10,7 +10,7 @@ export default store => next => action => {
   })
   
   const APIref = ETHERSCAN_API_REFERENCE + callAPI + `&apikey=${ETHERSCAN_API_KEY}`
-  setTimeout(() => {
+  setTimeout(() => { // timeout to show loader
     fetch(APIref)
       .then(res => res.json())
       .then(response => {

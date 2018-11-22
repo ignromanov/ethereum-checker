@@ -1,9 +1,13 @@
 import {ADD_OBSERVATION_ADDRESS, DELETE_OBSERVATION_ADDRESS, LOAD_BALANCES, LOAD_TRANSACTIONS} from "../actionTypes";
 
 export function addObservationAddress(address) {
-  return {
-    type: ADD_OBSERVATION_ADDRESS,
-    payload: { address }
+  return (dispatch) => {
+    dispatch({
+      type: ADD_OBSERVATION_ADDRESS,
+      payload: { address }
+    })
+  
+    dispatch(loadBalances(address))
   }
 }
 
@@ -23,10 +27,10 @@ export function loadBalances(addresses) {
   }
 }
 
-export function loadTransactions(address, page = 1) {
+export function loadTransactions(address, page = 1, offset = 20) {
   return {
     type: LOAD_TRANSACTIONS,
-    callAPI: `?module=account&action=txlist&address=${address}&page=${page}&offset=20&sort=desc&`,
+    callAPI: `?module=account&action=txlist&address=${address}&page=${page}&offset=${offset}&sort=desc&`,
     payload: { address, page }
   }
 }

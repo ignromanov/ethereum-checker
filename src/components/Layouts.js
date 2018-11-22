@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
 import {Col, Container, Navbar, Row} from 'reactstrap'
-import {BrowserRouter as Router, NavLink, Route, Redirect, Switch} from 'react-router-dom'
-import {Main} from './../routes/Main'
-import {Detailed} from './../routes/Detailed'
+import {BrowserRouter as Router, NavLink} from 'react-router-dom'
+import Routes from './../routes'
 
 class Layouts extends Component {
-  static defaultProps = {};
-  
-  static propTypes = {};
-  
-  getDetailedComponent = ({match}) => <Detailed address={match.params.address}/>
-  
   render() {
     return (
       <Router>
@@ -21,11 +14,7 @@ class Layouts extends Component {
           <Container fluid>
             <Row>
               <Col className='main'>
-                <Switch>
-                  <Route exact path='/' component={Main}/>
-                  <Route exact path='/detailed/:address' render={this.getDetailedComponent}/>
-                  <Redirect path="*" to="/"/>
-                </Switch>
+                <Routes/>
               </Col>
             </Row>
           </Container>

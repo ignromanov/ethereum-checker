@@ -1,36 +1,33 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap'
 import card from './../decorators/card'
-import Web3 from 'web3'
+import {isAddress} from './../ethereum'
 import {addObservationAddress} from './../actions'
 import {connect} from 'react-redux'
 
-class AddAddress extends Component {
-  static defaultProps = {};
-  
-  static propTypes = {};
-  
+class AddAddress extends PureComponent {
   state = {
     address: ''
   };
-  addressChangeHandler = (ev) => this.setState({address: ev.target.value})
-  addAddress = (ev) => {
-    const {address} = this.state
-    this.props.addObservationAddress(address)
+  addressChangeHandler = ev => this.setState({address: ev.target.value})
+  addAddressHandler = () => {
+    const {address} = this.state, {addObservationAddress} = this.props
+
+    if(!isAddress(address)) return
+    addObservationAddress(address)
     this.setState({address: ''})
   }
   
   render() {
     const {address} = this.state
-    const isEthereumAddress = Web3.utils.isAddress(address)
     return (
       <Form inline>
-        <FormGroup className="mb-5 mr-sm-5 mb-sm-0">
-          <Label for="observationAddress" className="mr-sm-5">Ethereum address</Label>
+        <FormGroup className="col-sm-6">
+          <Label for="observationAddress" className="col-sm-4">Ethereum address</Label>
           <Input type="text" name="address" id="observationAddress" placeholder='0x0' value={address}
-                 valid={isEthereumAddress} className="mr-sm-5" onChange={this.addressChangeHandler}/>
+                 valid={isAddress(address)} className="col-sm-8" onChange={this.addressChangeHandler}/>
         </FormGroup>
-        <Button onClick={this.addAddress} color="primary" disabled={!isEthereumAddress}>Add address</Button>
+        <Button onClick={this.addAddressHandler} color="primary" disabled={!isAddress(address)}>Add address</Button>
       </Form>
     );
   }
